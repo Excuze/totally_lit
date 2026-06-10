@@ -16,6 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class BlockMixin {
     @Inject(method = "hasRandomTicks", at = @At("HEAD"), cancellable = true)
     private void canSchedule(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+        if (!AbstractCandleBlock.isLitCandle(state)) {
+            return;
+        }
         cir.setReturnValue(true);
     }
 

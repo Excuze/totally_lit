@@ -17,6 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class BlockMixin {
     @Inject(method = "hasRandomTicks", at = @At("HEAD"), cancellable = true)
     private void canSchedule(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+        if (!TotallyLit.JACK_O_LANTERN_MAP.containsKey(state.getBlock())) {
+            return;
+        }
         cir.setReturnValue(true);
     }
 
